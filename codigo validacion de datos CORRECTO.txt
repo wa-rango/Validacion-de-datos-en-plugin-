@@ -1,0 +1,83 @@
+<?php
+/*
+Plugin Name: Mi primer plugin
+Plugin URI: Http// Mi primer plugin.com
+Description: Este es mi primer plugin que va cambiar los titulos de cada entrada de un blog o categoria
+Version: 1.0
+Author: Alejandro Arango
+Author URI: Http://miurlpersonal.com
+License: GPL2
+License URI:  https://www.gnu.org/license/gpl-2.0.html
+Text Domain: miprimerplugin
+Domain Patch: /languages
+*/
+if( ! function_exists('mp_install') ) {
+    function mp_install(){
+    //Accion a ejecutar
+//    require_once 'activador.php';
+    }
+}
+
+if( ! class_exists('MP_Mi_Class') ) {
+    class  MP_Mi_Class {
+        
+    }
+}
+
+function mp_deactivation() {
+    // Accion a ejecutar
+    flush_rewrite_rules();
+}
+
+function mp_desinstall() {
+    // Borrar Tablas en la base de datos
+    // Quitar alguna configuraciones
+    // u Opciones 
+}
+
+if( ! isset ( $mivariable ) ) {
+   $mivariable = 'nuevo valor';
+}
+
+register_activation_hook( __FILE__, 'mp_install' );
+register_deactivation_hook( __FILE__, 'mp_deactivation' );
+
+if( ! function_exists('mp_plugins_cargados') ) {
+    
+    add_action( 'plugins_loaded', 'mp_plugins_cargados' );
+
+    function mp_plugins_cargados() {
+      
+        if( current_user_can( 'edit_pages' ) ) {
+            
+            // Agregando Meta description
+            if( ! function_exists( 'mp_add_meta_description') ) {
+    
+        
+                function mp_add_meta_description() {
+                    echo"<meta name='description' content='Creacion de plugins en Wordpress' >";
+                    
+                }
+                add_action( 'wp_head', 'mp_add_meta_description' );
+            }
+    
+        }
+        
+    }
+    
+}
+$_POST['frutas'] = [
+    'manzanas',
+    'pera',
+    'durazno',
+    'melocoton',
+    'test@test'
+];
+$frutas = $_POST['frutas'];
+
+if( in_array( 'durazno', $frutas) ) {
+    echo "durazno fue encontrado";
+} else 
+{
+    echo "No se encontro";
+}
